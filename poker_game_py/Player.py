@@ -9,3 +9,7 @@ class Player:
         self.cards =[]
     def add_card(self,card):
         self.cards.append(card)
+    def remove_card(self,card):
+        self.cards.remove(card)
+    def get_cards(self):
+        return self.cards
