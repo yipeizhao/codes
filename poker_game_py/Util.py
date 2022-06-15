@@ -14,10 +14,10 @@ def card_stack_generator():
     nums = [str(i) for i in range(0,10)]
     nums[0] = "A";nums.append("J");nums.append("Q");nums.append("K");
     # Hearts, diamonds, spades , clubs
-    colors = ["H","D","S","C"]
+    suits = ["H","D","S","C"]
     card_stack = []
     for n in nums:
-        for c in colors:
+        for c in suits:
             card_stack.append(c+n)
     return card_stack
 
