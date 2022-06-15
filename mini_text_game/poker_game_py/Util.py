@@ -11,7 +11,7 @@ def greeting():
 
 # Returns a clean card stack
 def card_stack_generator():
-    nums = [str(i) for i in range(0,10)]
+    nums = [str(i) for i in range(1,11)]
     nums[0] = "A";nums.append("J");nums.append("Q");nums.append("K");
     # Hearts, diamonds, spades , clubs
     suits = ["H","D","S","C"]
