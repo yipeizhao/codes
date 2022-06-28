@@ -1,5 +1,5 @@
 import random
-
+import Hand_ranks
 def greeting():
     print("Welcome to the poker game.")
     print("Here is the rule:")
@@ -58,6 +58,7 @@ def exchange(player,index,card_stack):
     
 # n = round number
 # players = player list
+# return the result of the game
 def one_round(n, players):
     card_stack = card_stack_generator()
     for p in players:
@@ -75,4 +76,6 @@ def one_round(n, players):
             index = input("You entered an invalid command. Please try again.")
         else:
             flag = False
-            new_hand = players[0].get_cards()
+    res = [Hand_ranks.hand_ranks(c) for c in [p.get_cards() for p in players]]
+    
+        

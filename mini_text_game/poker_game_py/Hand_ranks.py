@@ -15,40 +15,76 @@ nums_dict={
     "A":14
 }
 nums_dict_inv = {v:k for k,v in nums_dict.items()}
+rank_dict = {"Straight flush":9,
+              "Four of a kind":8,
+              "Full house":7,
+              "Flush":6,
+              "Straight":5,
+              "Three of a kind":4,
+              "Two pair":3,
+              "Pair":2,
+              "High card":1}
 
+# find the key by the given value
+def key_by_val(v,d):
+    res = [key for key, val in d.items() if val == v]
+    return res if len(res)!=1 else res[0]
+
+
+# Return the hand rank
+# Para:
+    # cards, list
+# Return:
+    # List
+    # list[0] = Name of the rank
+    # list[1] = Ranking of the hand, in int, higher the int, better the hand
+    # list[2] = int, number of the highest rank in hand
+    # list[3] = int, number of the second highest rank in hand
+    # list[4] = list, rest of the hand
 def hand_ranks(cards):
     res = ""; straight = False; flush = False
     # First item is suit
     suits = [item[0] for item in cards]
     # Second item is the number
     nums = [item[1:] for item in cards]
-    nums_encode = [nums_dict[item] for item in nums]
-    
+    nums = sorted([nums_dict[item] for item in nums])
+    nums.reverse()
     # if cards only have 1 suit
     if len(set(suits)) == 1:
         flush = True
         res = "Flush"
     # If sum of the cards is equal to the arithmetic progression
-    if set(nums_encode) == set(range(min(nums_encode),max(nums_encode)+1)):
+    if nums == list(range(max(nums),min(nums)-1,-1)):
         straight  = True
         res = "Straight"
     if flush & straight:
         res = "Straight flush"
-    if flush|straight:
-        return res + ", " + nums_dict_inv[max(nums_encode)] + " high"
+        res = [res,rank_dict[res],nums[0],nums[1],[]]
+        return res
+    elif flush:
+        res = [res,rank_dict[res],0,0,nums]
+        return res
+    elif straight:
+        res = [res,rank_dict[res],nums[0],nums[1],[]]
+        return res
     
     # Determine the pairness of the cards
     counter = dict(collections.Counter(nums))
-    counter_inv = {v:k for k,v in counter.items()}
-    if max(counter.values()) == 4:
-        return "Four of a kind, " + counter_inv[4]
     
+    if max(counter.values()) == 4:
+        res = "Four of a kind"
+        res = [res,rank_dict[res],key_by_val(4,counter),0,key_by_val(1, counter)]    
+        
     elif max(counter.values()) == 3:
         if min(counter.values()) == 2:
-            return "Full house, three of a kind of " + counter_inv[3] + ", and a pair of " + counter_inv[2]
+            res = "Full house"
+            res = [res,rank_dict[res],key_by_val(3,counter),key_by_val(2,counter),[]]
         elif min(counter.values()) == 1:
-            return "Three of a kind of " + counter_inv[3]
-        
+            res = "Three of a kind"
+            # list[3] = max of the high card
+            # list[4] = min of the high card
+            res = [res,rank_dict[res],key_by_val(3,counter),0,sorted(key_by_val(1, counter))]
+            
     elif max(counter.values()) == 2:
         pairs = []
         # Collect all pairs
@@ -56,16 +92,34 @@ def hand_ranks(cards):
             if counter[item] == 2:
                 pairs.append(item)
         # If there is only one pair
-        pairs = [nums_dict[item] for item in pairs]
         if len(pairs) == 1:
-            return "One pair, " + counter_inv[2]
+            res = "Pair"
+            res = [res,rank_dict[res],key_by_val(2,counter),0,key_by_val(1, counter)]
         elif len(pairs) == 2:
-            return "Two pair, high pair " + str(sorted(pairs)[1]) +", low pair " + str(sorted(pairs)[0])
+            res= "Two pair"
+            res = [res,rank_dict[res],max(key_by_val(2,counter)),min(key_by_val(2,counter)),[key_by_val(1,counter)]]
         
     elif max(counter.values()) == 1:
-        return "High card, " + nums_dict_inv[max(nums_encode)]
+        res = "High card"
+        res = [res,rank_dict[res],0,0,nums]
     
     else:
         Exception("Ops, something went wrong in hands ranking.")
-        
-test = hand_ranks(["H7","S8","C10","D9","S6"])
+    
+    return res
+
+def hand_ranks_compare(a,b,index=1,list_index=0):
+    if type(a[index]) == int:
+        if a[index]>b[index]:
+            return 1
+        elif a[index]>b[index]:
+            return 2
+        else:
+            return hand_ranks_compare(a,b,index+1,list_index)
+    else:
+        if a[index][list_index]>b[index][list_index]:
+            return 1
+        elif a[index][list_index]<b[index][list_index]:
+            return 2
+        else:
+            return hand_ranks_compare(a,b,index,list_index+1)
