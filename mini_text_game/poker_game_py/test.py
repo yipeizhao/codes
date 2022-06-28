@@ -19,7 +19,7 @@ class Test(unittest.TestCase):
                     a = "'" + item + "'"
                     string += a
                 else:
-                    string+=(","+str(item))
+                    string+=(str(item)+",")
             string+="]"
             f.write(string)
             f.write("\n")

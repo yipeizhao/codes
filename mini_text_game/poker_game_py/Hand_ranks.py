@@ -59,13 +59,13 @@ def hand_ranks(cards):
         res = "Straight"
     if flush & straight:
         res = "Straight flush"
-        res = [res,rank_dict[res],nums[0],nums[1],[]]
+        res = [rank_dict[res],nums[0],nums[1],[],res]
         return res
     elif flush:
-        res = [res,rank_dict[res],0,0,nums]
+        res = [rank_dict[res],0,0,nums,res]
         return res
     elif straight:
-        res = [res,rank_dict[res],nums[0],nums[1],[]]
+        res = [rank_dict[res],nums[0],nums[1],[],res]
         return res
     
     # Determine the pairness of the cards
@@ -73,17 +73,17 @@ def hand_ranks(cards):
     
     if max(counter.values()) == 4:
         res = "Four of a kind"
-        res = [res,rank_dict[res],key_by_val(4,counter),0,key_by_val(1, counter)]    
+        res = [rank_dict[res],key_by_val(4,counter),0,key_by_val(1, counter),res]
         
     elif max(counter.values()) == 3:
         if min(counter.values()) == 2:
             res = "Full house"
-            res = [res,rank_dict[res],key_by_val(3,counter),key_by_val(2,counter),[]]
+            res = [rank_dict[res],key_by_val(3,counter),key_by_val(2,counter),[],res]
         elif min(counter.values()) == 1:
             res = "Three of a kind"
             # list[3] = max of the high card
             # list[4] = min of the high card
-            res = [res,rank_dict[res],key_by_val(3,counter),0,sorted(key_by_val(1, counter))]
+            res = [rank_dict[res],key_by_val(3,counter),0,sorted(key_by_val(1, counter)),res]
             
     elif max(counter.values()) == 2:
         pairs = []
@@ -94,32 +94,17 @@ def hand_ranks(cards):
         # If there is only one pair
         if len(pairs) == 1:
             res = "Pair"
-            res = [res,rank_dict[res],key_by_val(2,counter),0,key_by_val(1, counter)]
+            res = [rank_dict[res],key_by_val(2,counter),0,key_by_val(1, counter),res]
         elif len(pairs) == 2:
             res= "Two pair"
-            res = [res,rank_dict[res],max(key_by_val(2,counter)),min(key_by_val(2,counter)),[key_by_val(1,counter)]]
+            res = [rank_dict[res],max(key_by_val(2,counter)),min(key_by_val(2,counter)),[key_by_val(1,counter)],res]
         
     elif max(counter.values()) == 1:
         res = "High card"
-        res = [res,rank_dict[res],0,0,nums]
+        res = [rank_dict[res],0,0,nums,res]
     
     else:
         Exception("Ops, something went wrong in hands ranking.")
     
     return res
 
-def hand_ranks_compare(a,b,index=1,list_index=0):
-    if type(a[index]) == int:
-        if a[index]>b[index]:
-            return 1
-        elif a[index]>b[index]:
-            return 2
-        else:
-            return hand_ranks_compare(a,b,index+1,list_index)
-    else:
-        if a[index][list_index]>b[index][list_index]:
-            return 1
-        elif a[index][list_index]<b[index][list_index]:
-            return 2
-        else:
-            return hand_ranks_compare(a,b,index,list_index+1)
