@@ -21,18 +21,6 @@ def card_stack_generator():
             card_stack.append(c+n)
     return card_stack
 
-# n = numebr of cards draw
-# Returns the current card stack and the player
-def draw_cards(n,card_stack,player):
-    for i in range(n):
-        # Draw a random card
-        card = random.choice(card_stack)
-        # Add the random card to the players hand
-        player.add_card(card)
-        # Remove the card from the stack
-        card_stack.remove(card)
-    return card_stack,player
-
 # Exchange a players current hand with given index
 # Return player's current hand
 def exchange(player,index,card_stack):
@@ -53,7 +41,7 @@ def exchange(player,index,card_stack):
         for item in remove_cards:
             player.remove_card(item)
         # Draw equivalent cards
-        draw_cards(len(index), card_stack, player)
+        player.draw_cards(card_stack,len(index))
         return player.get_cards()
     
 # n = round number
@@ -62,7 +50,7 @@ def exchange(player,index,card_stack):
 def one_round(n, players):
     card_stack = card_stack_generator()
     for p in players:
-        draw_cards(5, card_stack, p)
+        p.draw_cards(card_stack,5)
     flag = True
     print("Your hand is:");
     print("   1     2     3     4     5 ")  
@@ -77,5 +65,9 @@ def one_round(n, players):
         else:
             flag = False
     res = [Hand_ranks.hand_ranks(c) for c in [p.get_cards() for p in players]]
-    
+    res = Hand_ranks.quick_sort(res)
+    print(res)
+    _ = input("Press enter to continue")
+    for item in players:
+        item.clear_hand()   
         

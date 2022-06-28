@@ -108,3 +108,11 @@ def hand_ranks(cards):
     
     return res
 
+# Quick sort 
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[0]
+    left = [item for item in arr[1:] if item <= pivot]
+    right = [item for item in arr[1:] if item > pivot]
+    return quick_sort(right) + [pivot] + quick_sort(left)

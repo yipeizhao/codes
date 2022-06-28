@@ -1,4 +1,5 @@
 from Hand_ranks import hand_ranks
+import random
 class Player:
     def __init__(self,name):
         self.name = name
@@ -21,3 +22,11 @@ class Player:
         self.hand = hand_ranks(self.cards)
     def get_hand_rank(self):
         return self.hand
+    def draw_cards(self,card_stack,n):
+        for i in range(n):
+            # Draw a random card
+            card = random.choice(card_stack)
+            # Add the random card to the players hand
+            self.add_card(card)
+            # Remove the card from the stack
+            card_stack.remove(card)
