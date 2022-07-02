@@ -61,7 +61,7 @@ def one_round(n, players):
     card_stack = card_stack_generator()
     for p in players:
         p.draw_cards(card_stack,5)
-    print("Your hand is:");
+    print("Your hand is:")
     print("   1     2     3     4     5 ")  
     print(players[0].get_cards())
     print("")

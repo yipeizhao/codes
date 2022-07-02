@@ -1,7 +1,7 @@
 from Player import Player
 import Util
 import random
-name_list = ["Alice","Bob","Charlie","Danny","Elles","Franda","Gabi","Hermes","Illy","Jack","Lanny","Manny","Nancy","Olly","Penny","Quelle","Randy","Sandy","Tilly","Ully","Vicky","Willy","Xavier","Yvonne","Zoe"]
+name_list = ["Alice","Bob","Charlie","Danny","Elles","Franda","Gabi","Hermes","Illy","Jack","Lanny","Max","Niels","Olly","Penny","Quelle","Randy","Sam","Tilly","Ully","Vicky","Willy","Xavier","Yvonne","Zoe"]
 def __main__(round_max = 10,player_num = 3):
     # Greet and ask for the players name
     name = Util.greeting()
