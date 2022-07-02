@@ -1,4 +1,5 @@
 import collections
+# Giving the rank of each card
 nums_dict={
     "2":2,
     "3":3,
@@ -14,7 +15,10 @@ nums_dict={
     "K":13,
     "A":14
 }
+# Reverse nums_dict, val become key, key become val
 nums_dict_inv = {v:k for k,v in nums_dict.items()}
+
+# Rank of each hand situation, higher the int, better the hand
 rank_dict = {"Straight flush":9,
               "Four of a kind":8,
               "Full house":7,
@@ -108,7 +112,11 @@ def hand_ranks(cards):
     
     return res
 
-# Quick sort 
+# Quick sort algorithm
+# Para:
+    # arr, list
+# Return:
+    # List
 def quick_sort(arr):
     if len(arr) <= 1:
         return arr
@@ -116,3 +124,22 @@ def quick_sort(arr):
     left = [item for item in arr[1:] if item <= pivot]
     right = [item for item in arr[1:] if item > pivot]
     return quick_sort(right) + [pivot] + quick_sort(left)
+
+# Retur a sorted player list depending on their rank
+# Para:
+    # players_arr, list
+# Return:
+    # List
+def sort_hand(players_arr):
+    # Get the hand rank for all players
+    hand_array = [p.get_hand_rank() for p in players_arr]
+    # Sort the hand ranks
+    hand_array = quick_sort(hand_array)
+    # Sort the players according to the hand rank
+    # Using double pointer to associate rank with playerss
+    rank = []
+    for i in range(len(hand_array)):
+        for p in players_arr:
+            if hand_array[i] == p.get_hand_rank():
+                rank.append(p)
+    return rank
