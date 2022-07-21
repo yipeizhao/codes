@@ -4,4 +4,4 @@ Status/Completion of the Projects:
   - poker_game_py: Incompete
   - rps: Complete
   - shooting_range: Gamev2 complete, Gamev3 incomplete
-- Gatcha simulator
+- Gatcha simulator: not started
