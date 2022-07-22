@@ -5,3 +5,4 @@ Status/Completion of the Projects:
   - rps: Complete
   - shooting_range: Gamev2 complete, Gamev3 incomplete
 - Gatcha simulator: not started
+- RSA Encryption
