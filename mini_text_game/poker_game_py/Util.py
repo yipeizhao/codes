@@ -82,7 +82,10 @@ def one_round(n, players):
     # Sort the players by their hand ranks
     res = Hand_ranks.sort_hand(players)
     for i in range(len(res)):
-        print("Rank   " + str(i+1) + "   " + res[i].get_name() + "   [" +  (",").join(res[i].get_cards()) + "]   "+ res[i].get_hand_rank()[-1])
+        # Print forcing alignment
+        print("Rank: %s Name: %-*s %-*s %-*s Total Score: %s + %s" % (str(i+1), 10, res[i].get_name(), 37, res[i].get_cards(), 20 ,res[i].get_hand_rank()[-1],str(res[i].score),len(res)-i))
+        # Add score to all players
+        res[i].add_score(len(res)-i)
     _ = input("Press enter to continue \n")
     for item in players:
         item.clear_hand()   
