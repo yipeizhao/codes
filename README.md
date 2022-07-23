@@ -6,3 +6,4 @@ Status/Completion of the Projects:
   - shooting_range: Gamev2 complete, Gamev3 incomplete
 - Gatcha simulator: not started
 - RSA Encryption
+- Quantum encryption demo?
