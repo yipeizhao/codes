@@ -4,6 +4,6 @@ Status/Completion of the Projects:
   - poker_game_py: Complete
   - rps: Complete
   - shooting_range: Gamev2 complete, Gamev3 incomplete
-- Gatcha simulator: not started
+- gacha_simulator: not started
 - RSA Encryption
 - Quantum encryption demo?
